@@ -24,3 +24,4 @@ public class Paddle : MonoBehaviour
             direction = Vector2.down;
         }
 }
+}
