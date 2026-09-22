@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 922c2bf238e003a4c8ac3889503877a0
+  productGUID: cc982c541dad9974eab9d54275e13af0
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: P1_Pong
+  productName: Pong
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -609,14 +609,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: P1_Pong
+  metroPackageName: Pong
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: P1_Pong
+  metroApplicationDescription: Pong
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -687,10 +687,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 1fe2d124-47a0-4670-8767-5ff65ce8fff0
+  cloudProjectId: 70dc8f53-6b1c-45e8-8833-6cbe3e78b1b8
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: P1_Pong
+  projectName: Pong
   organizationId: videon
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
