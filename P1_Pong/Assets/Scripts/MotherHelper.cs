@@ -23,13 +23,17 @@ public class MotherHelper : MonoBehaviour
     [Header("Chaos (0 = predictable, 0.5 = very random)")]
     [Range(0f, 0.9f)] public float chaos = 0.3f;
 
-    private enum Stage
-    {
-        Waiting,        // normal Pong, counting hits
-        Asking,         // "Can Mother help you?" is on screen
-        WaitingForHit,  // answered, waiting for a hit to take over
-        Controlling,    // mother has the paddle
-        Free            // player has the paddle back
+        [Header("Ending")]
+    public int hitsBeforeFullControl = 6;   // player hits (while free) before she takes over for good
+    public float fullControlStrength = 4f;
+
+    private enum Stage {
+            Waiting,
+            Asking,
+            WaitingForHit,
+            Controlling,
+            Free,
+            FullControl     // permanent, never released
     }
 
     private Stage stage = Stage.Waiting;
@@ -38,11 +42,11 @@ public class MotherHelper : MonoBehaviour
     private bool askedAgain = false;
     private float timer = 0f;
     private bool playerSaidYes; // saved for later experiments
-
     private Paddle _paddle;
     private Ball _ball;
     private SpriteRenderer _sprite;
     private Color _originalColor;
+    private int freeHits = 0;
 
     private void Awake()
     {
@@ -66,6 +70,12 @@ public class MotherHelper : MonoBehaviour
         else if (stage == Stage.WaitingForHit)
         {
             StartControl();
+        }
+        else if (stage == Stage.Free)
+        {
+            freeHits++;
+            Debug.Log("Free hits: " + freeHits);
+            if (freeHits >= hitsBeforeFullControl) StartFullControl();
         }
     }
 
@@ -103,13 +113,15 @@ public class MotherHelper : MonoBehaviour
     // has written the player's input. Her movement overwrites it.
     private void LateUpdate()
     {
-        if (stage != Stage.Controlling) return;
+        if (stage != Stage.Controlling && stage != Stage.FullControl) return;
 
-        float strength = followStrength + followStrengthPerTakeover * takeoverCount;
+        float strength = (stage == Stage.FullControl)
+            ? fullControlStrength
+            : followStrength + followStrengthPerTakeover * takeoverCount;
+
         float diffY = _ball.transform.position.y - transform.position.y;
         _paddle.direction = new Vector2(0f, diffY * strength);
     }
-
     private void StartAsking()
     {
         stage = Stage.Asking;
@@ -132,6 +144,13 @@ public class MotherHelper : MonoBehaviour
         Debug.Log("Mother takes control for " + timer.ToString("F1") + "s (takeover #" + (takeoverCount + 1) + ")");
     }
 
+        private void StartFullControl()
+    {
+        stage = Stage.FullControl;
+        if (_sprite != null) _sprite.color = Color.red;
+        Debug.Log("Mother has full control. She never gives it back.");
+    }
+
     private void EndControl()
     {
         takeoverCount++;
@@ -150,6 +169,16 @@ public class MotherHelper : MonoBehaviour
     // Big speech bubble, centered on screen
     private void OnGUI()
     {
+                if (stage == Stage.FullControl)
+        {
+            GUIStyle s = new GUIStyle(GUI.skin.label);
+            s.fontSize = Mathf.RoundToInt(Screen.height * 0.06f);
+            s.alignment = TextAnchor.MiddleCenter;
+            GUI.Label(new Rect(0, Screen.height * 0.1f, Screen.width, Screen.height * 0.1f),
+                "I'm only trying to help.", s);
+            return;
+        }
+        
         if (stage != Stage.Asking) return;
 
         float w = Screen.width * 0.5f;
