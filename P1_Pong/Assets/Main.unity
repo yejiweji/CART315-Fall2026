@@ -873,6 +873,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &665349547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7930131445347234323, guid: 36d863dd16cf0fd46a56fc42989d9bac, type: 3}
+  m_PrefabInstance: {fileID: 2198652646367565185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &665349548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665349547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396785585ddb4484ba97e6b0a2aa97ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MotherHelper
+  hitsBeforeOffer: 2
+  controlDuration: 2
 --- !u!1 &719226495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,7 +1775,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.97
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 0
@@ -1783,7 +1802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6b401aad6db094c8d34ffff1613852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
-  speed: 100
+  speed: 299
 --- !u!61 &1233802268
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2345,7 +2364,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7930131445347234323, guid: 36d863dd16cf0fd46a56fc42989d9bac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 665349548}
   m_SourcePrefab: {fileID: 100100000, guid: 36d863dd16cf0fd46a56fc42989d9bac, type: 3}
 --- !u!1001 &3518406120990047594
 PrefabInstance:
