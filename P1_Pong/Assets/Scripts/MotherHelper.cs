@@ -3,26 +3,46 @@ using UnityEngine.InputSystem;
 
 public class MotherHelper : MonoBehaviour
 {
-    [Header("Tuning (change these in the Inspector)")]
-    public int hitsBeforeOffer = 1;
-    public float controlDuration = 5f; // seconds the mother takes over
+    [Header("Offer")]
+    public int hitsBeforeOffer = 2;
+
+    [Header("Mother's control (seconds)")]
+    public float controlDuration = 2f;     // first takeover
+    public float controlGrowth = 1.6f;     // each takeover lasts this many times longer
+    public float maxControlDuration = 30f;
+
+    [Header("Player's free time (seconds)")]
+    public float freeDuration = 12f;       // free time after the first takeover
+    public float freeShrink = 0.75f;       // each free period is this fraction of the last
+    public float minFreeDuration = 2f;
+
+    [Header("How hard she follows the ball")]
+    public float followStrength = 2f;      // move faster than the ball to catch it
+    public float followStrengthPerTakeover = 0.5f;
+
+    [Header("Chaos (0 = predictable, 0.5 = very random)")]
+    [Range(0f, 0.9f)] public float chaos = 0.3f;
 
     private enum Stage
     {
         Waiting,        // normal Pong, counting hits
-        Asking,         // "Can I help you?" is on screen
-        WaitingForHit,  // answered, waiting for one more hit
+        Asking,         // "Can Mother help you?" is on screen
+        WaitingForHit,  // answered, waiting for a hit to take over
         Controlling,    // mother has the paddle
-        Released        // control given back to the player
+        Free            // player has the paddle back
     }
 
     private Stage stage = Stage.Waiting;
     private int playerHits = 0;
-    private float controlTimer = 0f;
+    private int takeoverCount = 0;
+    private bool askedAgain = false;
+    private float timer = 0f;
     private bool playerSaidYes; // saved for later experiments
 
     private Paddle _paddle;
     private Ball _ball;
+    private SpriteRenderer _sprite;
+    private Color _originalColor;
 
     private void Awake()
     {
@@ -31,9 +51,6 @@ public class MotherHelper : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         if (_sprite != null) _originalColor = _sprite.color;
     }
-
-    private SpriteRenderer _sprite;
-    private Color _originalColor;
 
     // Paddle.cs calls this every time the ball hits the player's paddle
     public void RegisterPlayerHit()
@@ -44,18 +61,11 @@ public class MotherHelper : MonoBehaviour
             Debug.Log("Player hits: " + playerHits);
 
             if (playerHits >= hitsBeforeOffer)
-            {
-                stage = Stage.Asking;
-                Time.timeScale = 0f; // pause while she asks
-            }
+                StartAsking();
         }
         else if (stage == Stage.WaitingForHit)
         {
-            // One more hit after answering: she takes over
-            stage = Stage.Controlling;
-            controlTimer = controlDuration;
-            Debug.Log("Mother takes control");
-            if (_sprite != null) _sprite.color = Color.red;
+            StartControl();
         }
     }
 
@@ -68,12 +78,23 @@ public class MotherHelper : MonoBehaviour
         }
         else if (stage == Stage.Controlling)
         {
-            controlTimer -= Time.deltaTime;
-            if (controlTimer <= 0f)
+            timer -= Time.deltaTime;
+            if (timer <= 0f) EndControl();
+        }
+        else if (stage == Stage.Free)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
             {
-                stage = Stage.Released;
-                Debug.Log("Mother releases control");
-                if (_sprite != null) _sprite.color = _originalColor;
+                if (!askedAgain)
+                {
+                    askedAgain = true; // she only asks one more time
+                    StartAsking();
+                }
+                else
+                {
+                    stage = Stage.WaitingForHit; // she just takes over on the next hit
+                }
             }
         }
     }
@@ -84,8 +105,46 @@ public class MotherHelper : MonoBehaviour
     {
         if (stage != Stage.Controlling) return;
 
+        float strength = followStrength + followStrengthPerTakeover * takeoverCount;
         float diffY = _ball.transform.position.y - transform.position.y;
-        _paddle.direction = new Vector2(0f, diffY*2f); // move faster than the ball to catch it
+        _paddle.direction = new Vector2(0f, diffY * strength);
+    }
+
+    private void StartAsking()
+    {
+        stage = Stage.Asking;
+        Time.timeScale = 0f; // pause while she asks
+    }
+
+    private void Answer(bool accepted)
+    {
+        playerSaidYes = accepted;
+        stage = Stage.WaitingForHit; // same result for YES and NO
+        Time.timeScale = 1f;         // resume
+        Debug.Log("Player answered: " + (accepted ? "YES" : "NO"));
+    }
+
+    private void StartControl()
+    {
+        stage = Stage.Controlling;
+        timer = Randomize(Mathf.Min(controlDuration * Mathf.Pow(controlGrowth, takeoverCount), maxControlDuration));
+        if (_sprite != null) _sprite.color = Color.red;
+        Debug.Log("Mother takes control for " + timer.ToString("F1") + "s (takeover #" + (takeoverCount + 1) + ")");
+    }
+
+    private void EndControl()
+    {
+        takeoverCount++;
+        stage = Stage.Free;
+        timer = Randomize(Mathf.Max(freeDuration * Mathf.Pow(freeShrink, takeoverCount - 1), minFreeDuration));
+        if (_sprite != null) _sprite.color = _originalColor;
+        Debug.Log("Mother releases control. Player free for " + timer.ToString("F1") + "s");
+    }
+
+    // Adds randomness so the timing feels unpredictable
+    private float Randomize(float value)
+    {
+        return value * Random.Range(1f - chaos, 1f + chaos);
     }
 
     // Big speech bubble, centered on screen
@@ -106,7 +165,7 @@ public class MotherHelper : MonoBehaviour
         buttonStyle.fontSize = Mathf.RoundToInt(h * 0.11f);
 
         GUI.Box(box, "");
-        GUI.Label(new Rect(box.x, box.y + h * 0.08f, w, h * 0.45f), "Can I help you?", labelStyle);
+        GUI.Label(new Rect(box.x, box.y + h * 0.08f, w, h * 0.45f), "Can Mother help you?", labelStyle);
 
         float btnW = w * 0.35f;
         float btnH = h * 0.25f;
@@ -114,13 +173,5 @@ public class MotherHelper : MonoBehaviour
 
         if (GUI.Button(new Rect(box.x + w * 0.10f, btnY, btnW, btnH), "YES (Y)", buttonStyle)) Answer(true);
         if (GUI.Button(new Rect(box.x + w * 0.55f, btnY, btnW, btnH), "NO (N)", buttonStyle)) Answer(false);
-    }
-
-    private void Answer(bool accepted)
-    {
-        playerSaidYes = accepted;
-        stage = Stage.WaitingForHit; // same result for YES and NO, for now
-        Time.timeScale = 1f;         // resume
-        Debug.Log("Player answered: " + (accepted ? "YES" : "NO"));
     }
 }
