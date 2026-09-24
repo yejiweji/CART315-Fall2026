@@ -1,4 +1,4 @@
-# Motivation Statement
+# Motivation Statement: TBD Pong
 
 I find Pong, to put it plainly, a boring game because although the player has a semblance of control, their freedom is very limited. The paddle can only move up and down, and the game already determines what you are supposed to do with it. I want to explore what happens when even that semblance of control is gradually taken away, packaged in a manipulative and helpful front.
 
