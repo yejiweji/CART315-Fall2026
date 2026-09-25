@@ -3,7 +3,7 @@
 (PS. This MDM journal was written post finishing the game with preexisiting thoughts I had jotted down during the development in real time also from real-time git commit messages. However, I did mess the timing up out of confusion so please keep that in mind.) 
 
 ## Journal Update: Git Commit Bundle #1
-* **What:** I increased the ball movement speed, attached the `MotherHelper` script to trigger a help prompt after the 2nd paddle hit, and forced a 2-second Mother control takeover (making the paddle glow red) regardless of the user's choice.
+* **What:** I increased the ball movement speed, attached the 'MotherHelper' script to trigger a help prompt after the 2nd paddle hit, and forced a 2-second Mother control takeover (making the paddle glow red) regardless of the user's choice.
 
 * **So What:** This sets up the core thematic conflict where "help" masks invasive aggression. I didn't think much about adding the red glow besides wanting to visually see a change while coding, but looking back at my reflections on Chapter 2 of Pippin Barr’s *The Stuff Games Are Made Of*, I realize I felt that initial pull to explicitly direct the player to my intended narrative experience instead of letting the game's "stuff" speak for itself. I added the red because I wanted the threat to be apparent, but I didn't want it to feel too explicit. 
 
