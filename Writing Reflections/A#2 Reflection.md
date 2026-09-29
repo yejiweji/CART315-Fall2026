@@ -1,8 +1,11 @@
 Reflective Reading Assignment #2:
+<br>
 Schön & Bennett - Reflective Conversation With Materials
-
+<br>
 CART 315 - Game Prototyping
+<br>
 Yejin Oh 40229957
+<br>
 October 1st 2026
 
 I kept thinking about Schön’s idea of a designer developing an internal “gyroscope.” He describes it as the ability to look at your own work and recognize when something is good or not, even if you cannot completely explain why. I like that he does not treat this as something a designer either has or does not have. It develops through years of making things, reflecting on them, and learning to recognize quality for yourself.
