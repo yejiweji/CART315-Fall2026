@@ -12,6 +12,10 @@ public class Parallax : MonoBehaviour
 
     private void Update()
     {
+        // Background stops when the bird dies or waits at the start line
+        GameManager gm = GameManager.Instance;
+        if (gm != null && !gm.IsPlaying) return;
+
         meshRenderer.material.mainTextureOffset += new Vector2(animationSpeed * Time.deltaTime, 0);
     }
 

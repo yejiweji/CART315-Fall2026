@@ -18,6 +18,10 @@ public class Pipes : MonoBehaviour
 
     private void Update()
     {
+        // Freeze the world while the bird is dying (timeScale is no longer 0)
+        GameManager gm = GameManager.Instance;
+        if (gm != null && !gm.IsPlaying) return;
+
         transform.position += speed * Time.deltaTime * Vector3.left;
 
         if (transform.position.x < leftEdge) {
