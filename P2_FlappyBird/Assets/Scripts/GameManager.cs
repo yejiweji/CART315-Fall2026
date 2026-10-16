@@ -15,12 +15,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private Text bestText;      // optional: "BEST: 12"
     [SerializeField] private Text messageText;   // optional: "SO CLOSE!" / end-of-session text
+    [SerializeField] private LossRewards lossRewards; // optional: XP, fake social proof, streak
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject gameOver;
 
     [Header("Zero-friction loop")]
     [SerializeField] private float restartLockout = 0.3f;
     [SerializeField] private float autoResetDelay = 1.2f;
+    [Tooltip("How long the GAME OVER banner stays up before it hides and the 'SO CLOSE' message appears.")]
+    [SerializeField] private float gameOverBannerTime = 0.6f;
 
     [Header("Near-miss director")]
     [SerializeField] private bool directorEnabled = true;
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
     private int bestAtRunStart;
     private int runsSinceBest;
     private float deathTime;
+    private string pendingMessage = "";
+    private bool messagePending;
     private bool endAfterThisRun;
     private bool sessionStarted;
     private float sessionStartTime;
@@ -91,8 +96,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         highScore = persistBest ? PlayerPrefs.GetInt("HighScore", 0) : 0;
+        EnsureMessageText();
         UpdateBestText();
         SetMessage("");
+        if (lossRewards != null) lossRewards.OnSessionStart();
         EnterReady();
     }
 
@@ -115,6 +122,13 @@ public class GameManager : MonoBehaviour
             case GameState.Dying:
             {
                 float sinceDeath = Time.time - deathTime;
+
+                // Hide the GAME OVER banner first, then reveal the near-miss message
+                if (messagePending && sinceDeath >= gameOverBannerTime) {
+                    messagePending = false;
+                    if (gameOver != null) gameOver.SetActive(false);
+                    SetMessage(pendingMessage);
+                }
 
                 if (endAfterThisRun) {
                     // That run was the winning moment: let it land, then wrap up
@@ -161,6 +175,8 @@ public class GameManager : MonoBehaviour
         if (playButton != null) playButton.SetActive(false);
         if (gameOver != null) gameOver.SetActive(false);
 
+        messagePending = false;
+        if (lossRewards != null) lossRewards.OnSessionEnd();
         SetMessage("SESSION COMPLETE\nThanks for playing!\nBest: " + highScore);
     }
 
@@ -178,6 +194,9 @@ public class GameManager : MonoBehaviour
         score = 0;
         scoreText.text = score.ToString();
         SetMessage("");
+
+        messagePending = false;
+        if (lossRewards != null) lossRewards.OnRunStart();
 
         // Roll the run's fate up front: is this a breakthrough run?
         bestAtRunStart = highScore;
@@ -215,6 +234,8 @@ public class GameManager : MonoBehaviour
 
         score++;
         scoreText.text = score.ToString();
+
+        if (lossRewards != null) lossRewards.OnScore(score);
 
         if (score > highScore) {
             highScore = score;
@@ -269,7 +290,13 @@ public class GameManager : MonoBehaviour
         string message = "";
 
         if (newBest) {
-            message = "NEW BEST! " + score;
+            string[] prompts = {
+                "How far can you go?",
+                "Think you can beat it?",
+                "You're on a roll - go again!",
+                "Can you push it even higher?"
+            };
+            message = "NEW BEST! " + score + "\n" + prompts[Random.Range(0, prompts.Length)];
         } else if (bestAtRunStart >= minBestForDirector && actualGap == 0) {
             message = "TIED YOUR BEST!";
         } else if (bestAtRunStart >= minBestForDirector && actualGap >= 1 && actualGap <= nearMissWindow) {
@@ -278,10 +305,35 @@ public class GameManager : MonoBehaviour
             message = "SO CLOSE!\n" + lastShownGap + " away from your best!";
         }
 
-        SetMessage(message);
+        // Queue it: it appears after the GAME OVER banner hides (see Update)
+        pendingMessage = message;
+        messagePending = true;
+        SetMessage("");
+
+        // Every death pays out: XP, flattering fake stats, streak prompt
+        if (lossRewards != null) lossRewards.OnRunEnd(score, lastShownGap > 0);
 
         Debug.Log($"[Run] score={score} best={bestAtRunStart} actualGap={actualGap} shownGap={lastShownGap} " +
                   $"breakthrough={breakthroughRun} earlyDeaths={recentEarlyDeaths} runsSinceBest={runsSinceBest}");
+    }
+
+    // If no Message Text is linked in the Inspector, clone the (working) score text
+    // and use that, so the near-miss messages always have somewhere to appear.
+    private void EnsureMessageText()
+    {
+        if (messageText != null) return;
+
+        messageText = Instantiate(scoreText, scoreText.transform.parent);
+        messageText.name = "MessageText (auto-created)";
+        messageText.alignment = TextAnchor.MiddleCenter;
+        messageText.fontSize = 40;
+        messageText.horizontalOverflow = HorizontalWrapMode.Overflow;
+        messageText.verticalOverflow = VerticalWrapMode.Overflow;
+
+        RectTransform rt = messageText.rectTransform;
+        rt.anchoredPosition = scoreText.rectTransform.anchoredPosition + new Vector2(0f, -250f);
+
+        Debug.Log("No Message Text was linked, so one was created automatically below the score.");
     }
 
     private void SetMessage(string text)
