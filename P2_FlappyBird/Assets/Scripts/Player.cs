@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         GameManager gm = GameManager.Instance;
 
         // Hover at the start line until the first tap
-        if (gm == null || gm.State == GameState.Ready) return;
+        if (gm == null || gm.State == GameState.Ready || gm.State == GameState.Finished) return;
 
         // Input only counts while the run is live
         if (gm.State == GameState.Playing && GameManager.TapPressed()) {
