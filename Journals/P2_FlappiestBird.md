@@ -1,0 +1,20 @@
+# Design Journal: Flappiest Bird
+
+## Journal Update: #1
+
+Initially, I planned to strip away the addictive elements that contributed to Flappy Bird's success to see if the game itself could still hold people's interest. However, I started to feel like removing these elements would only make the game feel unfinished, and the results might be too blatant and predictable. If I took away the stuff that made Flappy Bird engaging and the game became boring, would that really tell me anything I didn't already expect? It felt like I would be proving a point by deliberately making the game worse, rather than genuinely exploring what makes it successful in the first place.
+
+Instead, I started wondering what would happen if I went in the opposite direction. What if I ramped up these elements and deliberately exploited what we know about human behaviour? If the creator of Flappy Bird had not taken it down, but instead used what he learned about player behaviour to keep updating and refining the game, what might it eventually look and feel like? At what point would improving engagement become something more manipulative and possibly unethical?
+
+This direction interests me because I want to explore when or if players become aware of the loop they are caught in. How long would someone keep playing before recognizing how the game encourages them to try again, chase a higher score, or believe that success is just one attempt away? At what point would they realize that their reactions are being deliberately encouraged by the design? Rather than removing the game's appeal, I want to push its most engaging elements further and see whether players would still consider it a good game if they became aware of how it keeps them playing.
+
+
+## Journal Update: #2
+
+I started looking into what elements of Flappy Bird I could change or push further to make it as addictive as possible. While doing this, I realized that a lot of the mechanics I wanted to experiment with were already implemented in the mobile game Co-op, such as rigged near misses, variable rewards, and losses disguised as wins. This connection was really noticeable to me because Co-op has a loyal, long-standing player base, with people who play habitually. It made me feel like I was on the right track with my prototype, since these mechanics were already being used in games that successfully keep people coming back.
+
+I started implementing these ideas by making the game adjust its difficulty based on how well the player was doing. The closer they get to beating their high score, the harder the game becomes, while occasional breakthrough runs give them a real chance of winning. I also added messages that exaggerate how close the player was to beating their record. I added XP for every pipe passed and death, a progress bar, fake player ranking percentages, streak warnings, and messages encouraging players to push further after getting a new high score. I wanted to see how failure could still feel rewarding when the game gives you something for it, even if you haven't actually beaten your score.
+
+After playtesting with someone, they suggested adding bird skins that players could unlock with XP. I liked this because it gave the XP a purpose beyond just filling up a bar. But then I started thinking about how I could push this idea further. Instead of guaranteeing a skin when you buy it, what if unlocking one was a 50/50 gamble? I'm thinking of having five skins, with the more desirable ones having lower chances of unlocking. This means players could spend the XP they worked for and still get nothing out of it, encouraging them to play more and gain more XP.
+
+I find it interesting how this could create another loop within the game. You play to earn XP, use that XP to try to unlock a skin, and if you don't get the one you want, you have to play more to try again. At that point, the player isn't just chasing a high score anymore. They're also chasing rewards outside the actual gameplay. I'm curious about how far I can take these systems before the game stops feeling rewarding and starts feeling like it's just finding more ways to keep you playing.x
