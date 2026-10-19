@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public float deathHop = 3f;
 
     private SpriteRenderer spriteRenderer;
+    private Sprite[] defaultSprites;
+    private Color defaultColor;
     private Collider2D bodyCollider;
     private Vector3 direction;
     private int spriteIndex;
@@ -19,11 +21,28 @@ public class Player : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         bodyCollider = GetComponent<Collider2D>();
+        defaultSprites = sprites;
+        defaultColor = spriteRenderer.color;
     }
 
     private void Start()
     {
         InvokeRepeating(nameof(AnimateSprite), 0.15f, 0.15f);
+    }
+
+    // Called by the skin shop. Empty sprites = keep the normal bird frames and just tint it.
+    public void ApplySkin(Sprite[] skinSprites, Color tint)
+    {
+        sprites = (skinSprites != null && skinSprites.Length > 0) ? skinSprites : defaultSprites;
+        spriteRenderer.color = tint;
+        spriteIndex = 0;
+
+        if (sprites.Length > 0) spriteRenderer.sprite = sprites[0];
+    }
+
+    public void ResetSkin()
+    {
+        ApplySkin(defaultSprites, defaultColor);
     }
 
     // Called by GameManager when entering Ready or starting a run

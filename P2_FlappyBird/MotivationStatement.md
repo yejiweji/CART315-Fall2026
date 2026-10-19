@@ -1,4 +1,4 @@
-# Motivation Statement: TBD Flappy Bird
+# Motivation Statement: Flappiest Bird
 
 Flappy Bird was such a popular and addictive game that its developer, Dong Nguyen, eventually removed it from the App Store despite its success. It honestly blows my mind that a game so simple could have such a grip on people that its creator felt guilty about the effect it was having on them. I wanted to understand what made it so difficult to put down, and through researching its success, I found that some of its mechanics resemble the reward systems used in slot machines. The instant restart, near misses, frustration, and constant possibility of beating your high score all encourage you to try again. It made me question how much of a game's success comes from the game itself and how much comes from the way it triggers our brains to keep wanting more.
 

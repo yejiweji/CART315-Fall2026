@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class LossRewards : MonoBehaviour
 {
     [Header("UI - shown after each death")]
-    [SerializeField] private GameObject resultsPanel;   // parent of the four items below
+    [SerializeField] private GameObject resultsPanel;   // parent of the items below
     [SerializeField] private Text xpGainText;           // "+35 XP"
     [SerializeField] private Text levelText;            // "LEVEL 3"
     [SerializeField] private Slider xpBar;              // min 0, max 1, not interactable
-    [SerializeField] private Text xpLabelText;          // "XP: 235" - counts up as the bar fills
+    [SerializeField] private Text xpLabelText;          // "XP: 235" - your spendable balance
     [SerializeField] private Text proofText;            // "You're in the top 12% today!"
 
     [Header("UI - always visible")]
@@ -22,10 +22,10 @@ public class LossRewards : MonoBehaviour
     [Tooltip("Extra XP when the death was a 'near miss' to make a loss feel like progress.")]
     [SerializeField] private int nearMissBonusXp = 15;
 
-    [Header("Bar (fills all session, never resets)")]
-    [Tooltip("Total XP that fills the bar completely. Bigger = slower fill. The bar only resets when the session ends.")]
+    [Header("Bar (fills all session, never resets, never goes down when you spend XP)")]
+    [Tooltip("Total XP earned that fills the bar completely. Bigger = slower fill.")]
     [SerializeField] private int sessionXpGoal = 1500;
-    [Tooltip("Level number goes up every this much XP. The bar does NOT reset on a level up.")]
+    [Tooltip("Level number goes up every this much XP earned. The bar does NOT reset on a level up.")]
     [SerializeField] private int xpPerLevel = 100;
     [SerializeField] private float barFillSpeed = 0.5f;
 
@@ -42,12 +42,15 @@ public class LossRewards : MonoBehaviour
     [SerializeField] private int minFakeStreak = 3;
     [SerializeField] private int maxFakeStreak = 9;
 
-    private int totalXp = 0;
+    private int totalXp = 0;   // lifetime XP this session: drives the bar and level, never drops
+    private int balance = 0;   // spendable XP: what the skin shop charges
 
     private int dayStreak;
     private bool streakSecured;
 
     private Coroutine barRoutine;
+
+    public int Balance => balance;
 
     private void Awake()
     {
@@ -57,6 +60,17 @@ public class LossRewards : MonoBehaviour
         }
     }
 
+    // ---- Called by the skin shop ----
+
+    public bool TrySpend(int cost)
+    {
+        if (balance < cost) return false;
+
+        balance -= cost;
+        SetXpLabel(balance);
+        return true;
+    }
+
     // ---- Called by GameManager ----
 
     public void OnSessionStart()
@@ -64,6 +78,7 @@ public class LossRewards : MonoBehaviour
         dayStreak = Random.Range(minFakeStreak, maxFakeStreak + 1);
         streakSecured = false;
         totalXp = 0;
+        balance = 0;
 
         if (resultsPanel != null) resultsPanel.SetActive(false);
         UpdateLevelUI();
@@ -98,6 +113,7 @@ public class LossRewards : MonoBehaviour
         float startFill = FillFor(totalXp);
 
         totalXp += gain;
+        balance += gain;
 
         int newLevel = LevelFor(totalXp);
         float endFill = FillFor(totalXp);
@@ -122,9 +138,9 @@ public class LossRewards : MonoBehaviour
         // Show it all, then animate the bar
         if (resultsPanel != null) resultsPanel.SetActive(true);
         if (barRoutine != null) StopCoroutine(barRoutine);
-        barRoutine = StartCoroutine(AnimateBar(startLevel, startFill, newLevel, endFill));
+        barRoutine = StartCoroutine(AnimateBar(startLevel, startFill, newLevel, endFill, gain));
 
-        Debug.Log($"[LossRewards] score={score} xpGain={gain} totalXp={totalXp} level={newLevel} fakeTopPercent={topPercent} streakSecured={streakSecured}");
+        Debug.Log($"[LossRewards] score={score} xpGain={gain} totalXp={totalXp} balance={balance} level={newLevel} fakeTopPercent={topPercent} streakSecured={streakSecured}");
     }
 
     public void OnSessionEnd()
@@ -146,24 +162,28 @@ public class LossRewards : MonoBehaviour
         return Mathf.Clamp01(xp / (float)Mathf.Max(1, sessionXpGoal));
     }
 
-    private IEnumerator AnimateBar(int startLevel, float startFill, int newLevel, float endFill)
+    private IEnumerator AnimateBar(int startLevel, float startFill, int newLevel, float endFill, int gain)
     {
         if (levelText != null) levelText.text = "LEVEL " + startLevel;
 
         float f = startFill;
         SetBar(f);
-        SetXpLabel(Mathf.RoundToInt(f * sessionXpGoal));
+        SetXpLabel(balance - gain);
 
         // Bar only ever moves forward; it never resets mid-session
         while (f < endFill) {
             f = Mathf.MoveTowards(f, endFill, barFillSpeed * Time.deltaTime);
             SetBar(f);
-            SetXpLabel(Mathf.RoundToInt(f * sessionXpGoal)); // number counts up with the bar
+
+            // Balance counts up with the bar (stays correct even if the player spends mid-animation)
+            float t = Mathf.InverseLerp(startFill, endFill, f);
+            SetXpLabel(balance - Mathf.RoundToInt((1f - t) * gain));
+
             yield return null;
         }
 
         SetBar(endFill);
-        SetXpLabel(totalXp);
+        SetXpLabel(balance);
         if (levelText != null) levelText.text = "LEVEL " + newLevel;
     }
 
@@ -180,7 +200,7 @@ public class LossRewards : MonoBehaviour
     {
         if (levelText != null) levelText.text = "LEVEL " + LevelFor(totalXp);
         SetBar(FillFor(totalXp));
-        SetXpLabel(totalXp);
+        SetXpLabel(balance);
     }
 
     private void SetXpLabel(int value)

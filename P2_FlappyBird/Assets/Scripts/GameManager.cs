@@ -145,7 +145,14 @@ public class GameManager : MonoBehaviour
 
     public static bool TapPressed()
     {
-        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        if (Input.GetKeyDown(KeyCode.Space)) return true;
+
+        if (Input.GetMouseButtonDown(0)) {
+            // A tap on the skin shop buttons shouldn't also restart the run
+            return !SkinShop.BlocksTap(Input.mousePosition);
+        }
+
+        return false;
     }
 
     private void EnterReady()
