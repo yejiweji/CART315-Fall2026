@@ -324,8 +324,7 @@ public class GameManager : MonoBehaviour
                   $"breakthrough={breakthroughRun} earlyDeaths={recentEarlyDeaths} runsSinceBest={runsSinceBest}");
     }
 
-    // If no Message Text is linked in the Inspector, clone the (working) score text
-    // and use that, so the near-miss messages always have somewhere to appear.
+
     private void EnsureMessageText()
     {
         if (messageText != null) return;
