@@ -27,3 +27,9 @@ As I continued developing the prototype, I kept thinking about the flow of the g
 I also had a conversation with my mom about how these mechanics show up in everyday apps. She mentioned Duolingo and how she feels compelled to maintain her streak, even when she isn't entirely sure why. It made me think about how these systems can influence our behaviour without us consciously thinking about it. A streak gives you something to maintain, while progress bars and rewards make you feel like you're working towards something. Even when the activity itself isn't particularly exciting, these features can give you a reason to return.
 
 This got me thinking about my own relationship with games. I've never really considered myself someone with an addictive personality, and I've notoriously gotten bored of both physical and digital games after only a few plays since grade school. In a way, this prototype became a personal experiment in figuring out what might actually hold my attention. The version I've built feels like a reasonable representation of what might keep my brain engaged, but I know that won't necessarily be true for everyone. Some players might find it overwhelming, while others might still lose interest. I'm starting to think there might not be a universal formula for making something addictive, which leaves me with more questions about what I'm actually trying to achieve.
+
+
+
+## Tooling Disclosure
+
+Claude AI was used to help implement portions of the codebase (such as researching history behind Flappy Bird and colour theory, mathmatics, debugging and to generate inline comments) for the scripts. However, all was done for learning purposes and to deconstruct logistical details I did not know how to approach or solve. 
