@@ -1,0 +1,6 @@
+﻿<Solution>
+  <Project Path="Cart315.FirstPerson.Editor.csproj" />
+  <Project Path="Cart315.FirstPerson.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+</Solution>
