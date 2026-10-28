@@ -50,6 +50,6 @@ https://periltek.itch.io/stairs-pack-free
 Light fixture:
 https://assetstore.unity.com/packages/3d/props/interior/free-pbr-lamps-70181
 
-
-## Brainstorm:
+Wall texture (concrete):
+https://assetstore.unity.com/packages/2d/textures-materials/realistic-concrete-texture-305716
 
