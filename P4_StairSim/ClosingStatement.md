@@ -1,0 +1,2 @@
+# Closing Statement: Walking Simulator
+
