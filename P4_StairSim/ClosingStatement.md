@@ -1,2 +1,2 @@
-# Closing Statement: Walking Simulator
+# Closing Statement: Stair Simulator
 
