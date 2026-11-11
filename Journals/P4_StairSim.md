@@ -20,3 +20,5 @@ https://assetstore.unity.com/packages/3d/props/interior/free-pbr-lamps-70181
 Wall texture (concrete):
 https://assetstore.unity.com/packages/2d/textures-materials/realistic-concrete-texture-305716
 
+https://assetstore.unity.com/packages/3d/props/interior/door-free-pack-aferar-148411
+https://assetstore.unity.com/packages/3d/props/low-poly-industrial-pack-397642
