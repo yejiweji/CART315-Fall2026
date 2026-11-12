@@ -8,8 +8,6 @@ Not long after, a fire alarm went off in my condo. I had only moved in about a w
 
 I plan to add details you’d normally find in an apartment building, like railings, floor numbers, and fire exit signs, and give the player an actual starting point instead of dropping them straight into the stairwell. Second, I want to add a few characters the player can approach. They could ask what’s happening, but the answers wouldn’t really help. Some characters might not know anything, and others might share their own worries. I want to see if this makes the game feel more like a situation someone could actually end up in. I don’t want to lose the original idea of the endless stairwell, but I think there’s more I can do with it than making it empty and repetitive.
 
-## Journal Update #2:
-I’d keep this one focused on the actual changes you made and what you noticed from comparing the stairwell to your real condo. I also kept the fire alarm idea as something you considered but decided not to commit to yet.
 
 ## Journal Update #2
 
@@ -21,10 +19,16 @@ One thing I wanted to change from the first version was the lighting. I mentione
 
 I also started thinking about how I would act if I were actually in this situation. During the fire alarm, I remember feeling like I had to maintain a certain level of composure in case I ran into someone. I didn't know who I would encounter or whether they would be more worried than I was. I think I want to bring some of that into the game. The player shouldn't just be worried about getting downstairs. They should also be unsure of who they might run into along the way.
 
+
 ## Journal Update #3: 
-I added people bc they dont know either.
-i added a handman to express someone who seemed like would know.
-i wouldve liked to add more vulnerable people like children. but i think that empowers poeple to get it together and protect. i think bumping into a handman someone who would know whats going on in the building, doesn;t know; that really makes the player feel even smaller and vulnerable.
+
+I added a handyman to the stairwell as a stand-in for the other people I eventually want to include. I want the player to encounter different kinds of people while making their way downstairs, including staff members who seem like they would know what's happening and more vulnerable people, like children or someone with a baby. I think both types of encounters could make the situation more uncomfortable in different ways.
+
+I originally wanted to include someone like a staff member because, during my own experience, I remember hoping I would run into someone who could tell me what was going on. Someone who seemed like they knew the building and would have more information than I did. But what if even that person doesn't know what's happening? I think encountering someone who you would normally expect to rely on, only to realize they're just as confused, could make the player feel even more helpless. On the other hand, encountering someone more vulnerable could make the player feel like they need to take responsibility and help them, even though they don't know what's going on themselves. That's something I experienced when I ran into the mother and her baby during the fire alarm. I wasn't just thinking about getting myself downstairs anymore. I felt like I had to be someone they could rely on, even though I didn't feel particularly confident myself.
+
+For now, I've only added the handyman as a placeholder. I think having a mix of people who don't know what's happening, people who seem like they should know, and people who might need help would add more to the experience than having the player walk down an empty stairwell. It also means that encountering someone doesn't automatically make the player feel safer. Sometimes it might just give them another reason to worry.
+
+Moving forward, I would like to create a hallway for the player to explore and look into from the stairwell doors as well as possibly a room to begin in rather than spawning inside the stairwell of the get go.
 
 
 ## Tooling Disclosure
@@ -45,3 +49,6 @@ https://assetstore.unity.com/packages/3d/props/low-poly-industrial-pack-397642
 
 NPC:
 https://assetstore.unity.com/packages/3d/characters/humanoids/humans/bubba-the-handyman-388822
+
+Exit Sign:
+https://www.cgtrader.com/free-3d-models/architectural/decoration/exit-sign-96964851-040f-44fd-a5ad-e424cdcd044c

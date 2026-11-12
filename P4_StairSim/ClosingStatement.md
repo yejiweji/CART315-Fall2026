@@ -1,2 +1,9 @@
 # Closing Statement: Stair Simulator
 
+Working on this version made me reconsider what I actually want the player to feel. In my first prototype, I thought removing details from the stairwell would make it more unsettling, but I realized that having a more recognizable environment could make the experience feel more believable. Adding things like handrails, doors, and exit signs helped ground the space, while the consistent lighting made it feel more like an ordinary apartment building.
+
+My experience with the fire alarm also gave me a different direction to explore. I realized there's more to the experience when the player has to rely on other ordinary people rather than knowing they'll eventually have to face a monster or run away from something. The fear isn't necessarily about what's waiting at the end of the stairs. It's about all the possibilities running through your head. What if the antagonist's footsteps are real? What if nobody knows what's happening? What if the person you're relying on is just as clueless as you? What if you're making the wrong decision?
+
+I think the build up of these questions is more interesting to me than having an actual monster or jumpscare. I want the player to keep questioning what's happening without ever getting a clear answer. Other people might make the player feel less alone, but they can also make the situation more confusing when they don't know any more than the player does.
+
+I didn't get to develop every idea I had, especially the different character encounters, but this version helped me understand what I want to focus on moving forward. I don't necessarily want to scare the player with something they can see. I want to make them uncomfortable with what they can't know.
