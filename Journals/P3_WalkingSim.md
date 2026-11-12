@@ -1,6 +1,6 @@
 # Design Journal: Walking Simulator
 
-## Journal Update: #1
+## Journal Update #1:
 Initially, I was thinking of making a squirrel simulator where the player would navigate across electrical wires and the rooftops of tall skyscrapers. I liked the idea of exploring an environment from a different perspective, but the more I thought about it, the more the concept felt like something I'd already seen before. I wasn't sure what would make the experience meaningful beyond the novelty of being a squirrel.
 
 While scrolling through walking simulators on itch.io, I noticed how many had Backrooms-esque environments. This got me thinking less about what the player would physically do and more about what I wanted them to feel. Rather than creating something mechanically engaging or requiring the player to actively solve problems, I wanted to see if I could build an experience around a specific emotion.
@@ -15,7 +15,7 @@ What interests me most about this idea is that the player is free to move in eit
 
 
 
-## Journal Update: #2
+## Journal Update #2:
 
 As I started building the stairwell, I wanted to make the space tighter to make it feel more uncomfortable to walk through. I also considered leaving gaps in the structure so the player could see the world outside and question where they were. I even thought about letting them fall out of the world and die. However, I think I want to keep things more realistic for now rather than making the environment too obviously strange.
 
@@ -28,7 +28,7 @@ I also considered adding a counter to track how far the player has gone, but I'm
 I definitely need to experiment with textures more, too. Right now, having everything made of concrete makes the stairwell feel kind of generic. It's giving Roblox more than the liminal space I had in mind. I want it to look like an actual apartment stairwell, just one that feels increasingly wrong the longer you spend in it. I think I'll focus on the materials and lighting next and see how much they change the atmosphere before adding anything else.
 
 
-## Journal Update: #3
+## Journal Update #3:
 
 I've started adding lights to the stairwell, using Echelon stairs as inspiration. I added spotlights in certain areas to make the space feel a little off, even though there's nothing immediately threatening the player. I want the stairwell to feel like a normal apartment building at first, but have small details that make the player question whether something is wrong. I also made the lights flicker whenever the anomaly sound plays, so the lighting and audio work together to draw the player's attention to these moments.
 
